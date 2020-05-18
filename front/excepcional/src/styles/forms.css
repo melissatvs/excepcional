@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+
+.register {
+    width: 400px;
+    margin: 0 auto;
+}
+
+.campo-texto {
+    display: flex;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    padding: 0.5em;
+    width: 100%;
+    margin: 10px 3px;
+    font-size: 1em;
+}
+
+.botoes {
+    margin: 0 auto;
+    width: 212px;
+}
+
+.botao {
+    border: #000000;
+    color: #FFFFFF;
+    background-color: #000000;
+    margin: 3px;
+    padding: 0.5em;
+    width: 100px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.botao:hover {
+    background-color: #520304;
+}

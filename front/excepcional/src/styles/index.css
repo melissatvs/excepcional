@@ -1,0 +1,80 @@
+body {
+  font-family: 'Cousine', monospace;
+  width: 70%;
+  margin: auto;
+  user-select: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.cabecalho {
+  display: flex;
+  height: 80px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+main {
+  min-height: calc(100vh - 150px);
+}
+
+.titulo-geral {
+  color: #DE3441;
+}
+
+.titulo-pagina {
+  text-align: center;
+}
+
+.logo-exce {
+  color: #FF4050;
+}
+
+.logo-img {
+  vertical-align: top;
+}
+
+.login-box {
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  vertical-align: middle;
+}
+
+.login {
+  color: #DE3441;
+  font-size: 3em;
+}
+
+.apresentacao {
+  padding: 5em 0;
+}
+
+.rodape {
+  border-top: 1px solid #EEEEEE;
+  height: 50px;
+  font-size: 0.8em;
+}
+
+.carregando {
+  border: 3px solid #EEEEEE;
+  border-left-color: #000000;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+}
+
+
+@keyframes loading {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.carregando.is-animating {
+  animation: loading 1.5s cubic-bezier(.2, .7, .6, .3) infinite;
+}
