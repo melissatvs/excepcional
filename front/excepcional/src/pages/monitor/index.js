@@ -1,17 +1,8 @@
 import React, { Component } from 'react'
-import '../../styles/forms.css'
-import { Link } from 'react-router-dom'
+import TableGrid from '../../components/grid'
 import { BsSearch } from 'react-icons/bs'
 
 class Monitor extends Component {
-
-    state = { checked: false }
-
-    myChangeHandler = (event) => {
-        this.setState({
-            checked: !this.state.checked      
-        })
-    }
 
     render() {
         return(
@@ -38,55 +29,10 @@ class Monitor extends Component {
                     <input type="text"></input>
                     <BsSearch />
                 </section>
-                <table className="grade">
-                    <tr className="grade-linha">
-                        <th><input type="checkbox" onChange={this.myChangeHandler}></input></th>
-                        <th>Nível</th>
-                        <th>Data</th>
-                        <th>Hora</th>
-                        <th>Origem</th>
-                        <th>Mensagem</th>
-                        <th>Ocorrências</th>
-                    </tr>
-                    <tr className="grade-linha">
-                        <td><input type="checkbox" checked={this.state.checked}></input></td>
-                        <td>Erro</td>
-                        <td>01/02/2022</td>
-                        <td>11:59:03</td>
-                        <td>192.168.0.1</td>
-                        <td>Access Violation</td>
-                        <td>100</td>
-                    </tr>
-                    <tr className="grade-linha">
-                        <td><input type="checkbox" checked={this.state.checked}></input></td>
-                        <td>Erro</td>
-                        <td>01/02/2022</td>
-                        <td>11:59:03</td>
-                        <td>192.168.0.1</td>
-                        <td>Access Violation</td>
-                        <td>100</td>
-                    </tr>
-                    <tr className="grade-linha">
-                        <td><input type="checkbox" checked={this.state.checked}></input></td>
-                        <td>Erro</td>
-                        <td>01/02/2022</td>
-                        <td>11:59:03</td>
-                        <td>192.168.0.1</td>
-                        <td>Access Violation</td>
-                        <td>100</td>
-                    </tr>
-                    <tr className="grade-linha">
-                        <td><input type="checkbox" checked={this.state.checked}></input></td>
-                        <td>Erro</td>
-                        <td>01/02/2022</td>
-                        <td>11:59:03</td>
-                        <td>192.168.0.1</td>
-                        <td>Access Violation</td>
-                        <td>100</td>
-                    </tr>
-                </table>
+                
+                <TableGrid />
             </main>
-        )  
+        );
     }
       
 }
