@@ -1,7 +1,8 @@
 import { createStore } from 'redux';
 
 const initialState = {
-   user: {}
+   user: {},
+   erros: []
 };
 
 const store = createStore(
@@ -22,7 +23,13 @@ function reducer(state = initialState, action) {
       return {
          ...state,
          user: action.payload
-      };      
+      }; 
+      
+      case 'GET_ERROS':
+      return {
+         ...state,
+         erros: action.payload
+      };
 
       default:
       return state;
