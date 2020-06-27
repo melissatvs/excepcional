@@ -3,8 +3,8 @@ from django.http import Http404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+# from rest_framework.authentication import TokenAuthentication
+# from rest_framework.permissions import IsAuthenticated
 
 from api.models import Environment, Event, Application, User
 
@@ -18,8 +18,8 @@ class EnvironmentList(APIView):
     """
     List all environments, or create a new environment.
     """
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
 
     def get(self, request):
         environments = Environment.objects.all()
@@ -67,7 +67,7 @@ class EnvironmentDetail(APIView):
 
 class EventList(APIView):
     """
-    List all events, or create a new events.
+    List all events, or create a new event.
     """
     def get(self, request):
         events = Event.objects.all()
@@ -84,7 +84,7 @@ class EventList(APIView):
 
 class EventDetail(APIView):
     """
-    Retrieve, update or delete a events instance.
+    Retrieve, update or delete a event instance.
     """
     def get_object(self, pk):
         try:
@@ -115,7 +115,7 @@ class EventDetail(APIView):
 
 class ApplicationList(APIView):
     """
-    List all applications, or create a new applications.
+    List all applications, or create a new application.
     """
     def get(self, request):
         applications = Application.objects.all()
@@ -132,7 +132,7 @@ class ApplicationList(APIView):
 
 class ApplicationDetail(APIView):
     """
-    Retrieve, update or delete a applications instance.
+    Retrieve, update or delete a application instance.
     """
     def get_object(self, pk):
         try:
@@ -163,7 +163,7 @@ class ApplicationDetail(APIView):
 
 class UserDetail(APIView):
     """
-    Retrieve, update or delete a users instance.
+    Retrieve, update or delete a user instance.
     """
     def get_object(self, pk):
         try:
