@@ -1,8 +1,11 @@
 from django.http import Http404
 
 from rest_framework import status
+from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.schemas.openapi import AutoSchema
+
 # from rest_framework.authentication import TokenAuthentication
 # from rest_framework.permissions import IsAuthenticated
 
@@ -11,22 +14,28 @@ from api.models import Environment, Event, Application, User
 from api.serializers import EnvironmentModelSerializer
 from api.serializers import EventModelSerializer
 from api.serializers import ApplicationModelSerializer
-from api.serializers import UserModelSerializer
+from api.serializers import UserFullModelSerializer
+from api.serializers import UserViewModelSerializer
 
 
-class EnvironmentList(APIView):
-    """
-    List all environments, or create a new environment.
-    """
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+class EnvironmentListFiltered(generics.ListAPIView):
+    model = Environment
+    serializer_class = EnvironmentModelSerializer
+    
+    def get_queryset(self):
+        """
+        Retorna uma lista com todos ambientes
+        """
+        queryset = self.model.objects.all()
 
-    def get(self, request):
-        environments = Environment.objects.all()
-        serializer = EnvironmentModelSerializer(environments, many=True)
-        return Response(serializer.data)
+        return queryset
 
+
+class EnvironmentCreate(APIView):
     def post(self, request):
+        """
+        Cria um novo ambiente
+        """
         serializer = EnvironmentModelSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -35,9 +44,6 @@ class EnvironmentList(APIView):
 
 
 class EnvironmentDetail(APIView):
-    """
-    Retrieve, update or delete a environment instance.
-    """
     def get_object(self, pk):
         try:
             return Environment.objects.get(pk=pk)
@@ -45,7 +51,7 @@ class EnvironmentDetail(APIView):
             raise Http404
 
     def get(self, request, pk):
-        environment = Environment.objects.get(pk=pk)
+        environment = self.get_object(pk)
         serializer = EnvironmentModelSerializer(environment)
 
         return Response(serializer.data)
@@ -62,19 +68,51 @@ class EnvironmentDetail(APIView):
     def delete(self, request, pk):
         environment = self.get_object(pk)
         environment.delete()
+
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class EventList(APIView):
-    """
-    List all events, or create a new event.
-    """
-    def get(self, request):
-        events = Event.objects.all()
-        serializer = EventModelSerializer(events, many=True)
-        return Response(serializer.data)
+class EventListFiltered(generics.ListAPIView):
+    model = Event
+    serializer_class = EventModelSerializer
+
+    def get_queryset(self):
+        """
+        parameters:
+        - in: query
+            name: application
+            required: false
+            schema:
+            description: 'Id da Aplicação'
+            title: ''
+            type: integer
+        - in: query
+            name: environment
+            required: false
+            schema:
+            description: 'Id do Ambiente'
+            title: ''
+            type: integer
+        """
+
+        queryset = self.model.objects.all()
+        application = self.request.query_params.get('application')
+        environment = self.request.query_params.get('environment')
+
+        ordering_fields = ['level']
+
+        if application:
+            queryset = queryset.filter(application__id=application)
+
+        if environment:
+            queryset = queryset.filter(environment__id=environment)
+
+        return queryset
 
     def post(self, request):
+        """
+        Cria um novo evento
+        """
         serializer = EventModelSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -83,9 +121,6 @@ class EventList(APIView):
 
 
 class EventDetail(APIView):
-    """
-    Retrieve, update or delete a event instance.
-    """
     def get_object(self, pk):
         try:
             return Event.objects.get(pk=pk)
@@ -93,23 +128,22 @@ class EventDetail(APIView):
             raise Http404
 
     def get(self, request, pk):
-        events = Event.objects.get(pk=pk)
-        serializer = EventModelSerializer(events)
+        """
+        Retorna o evento
+        """
+        event = self.get_object(pk)
+        serializer = EventModelSerializer(event)
 
         return Response(serializer.data)
 
-    def put(self, request, pk):
-        events = self.get_object(pk)
-        serializer = EventModelSerializer(events, data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
     def delete(self, request, pk):
-        events = self.get_object(pk)
-        events.delete()
+        """
+        Exclui o evento
+        """
+
+        event = self.get_object(pk)
+        event.delete()
+
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -141,14 +175,17 @@ class ApplicationDetail(APIView):
             raise Http404
 
     def get(self, request, pk):
-        applications = Application.objects.get(pk=pk)
-        serializer = ApplicationModelSerializer(applications)
+        application = self.get_object(pk)
+        serializer = ApplicationModelSerializer(application)
 
         return Response(serializer.data)
 
     def put(self, request, pk):
-        applications = self.get_object(pk)
-        serializer = ApplicationModelSerializer(applications, data=request.data)
+        application = self.get_object(pk)
+        serializer = ApplicationModelSerializer(
+            application,
+            data=request.data
+        )
 
         if serializer.is_valid():
             serializer.save()
@@ -156,15 +193,26 @@ class ApplicationDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
-        applications = self.get_object(pk)
-        applications.delete()
+        application = self.get_object(pk)
+        application.delete()
+
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class UserList(APIView):
+    def post(self, request):
+        """
+        Cria um usuário
+        """
+        serializer = UserFullModelSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class UserDetail(APIView):
-    """
-    Retrieve, update or delete a user instance.
-    """
     def get_object(self, pk):
         try:
             return User.objects.get(pk=pk)
@@ -172,14 +220,14 @@ class UserDetail(APIView):
             raise Http404
 
     def get(self, request, pk):
-        users = User.objects.get(pk=pk)
-        serializer = UserModelSerializer(users)
+        users = self.get_object(pk)
+        serializer = UserViewModelSerializer(users)
 
         return Response(serializer.data)
 
     def put(self, request, pk):
         users = self.get_object(pk)
-        serializer = UserModelSerializer(users, data=request.data)
+        serializer = UserFullModelSerializer(users, data=request.data)
 
         if serializer.is_valid():
             serializer.save()
