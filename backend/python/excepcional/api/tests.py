@@ -119,7 +119,7 @@ class EventTestCase(TestCase):
 
         cls.event = Event.objects.create(
             user_name='USUARIOX',
-            level='Erro',
+            level='E',
             ip_address='127.0.0.1',
             message='Mensagem de teste',
             application=cls.application,
@@ -145,4 +145,4 @@ class EventTestCase(TestCase):
         self.assertIsNotNone(self.event)
 
     def test_should_assert_methods(self):
-        self.assertEqual(str(self.event), '127.0.0.1 Erro Mensagem de teste')
+        self.assertEqual(str(self.event), '127.0.0.1 E Mensagem de teste')

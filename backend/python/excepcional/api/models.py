@@ -39,6 +39,9 @@ class Application(models.Model):
 
 
 class Event(models.Model):
+    """
+    Evento
+    """
     ERROR = 'E'
     CRITICAL = 'C'
     WARNING = 'W'
@@ -80,3 +83,7 @@ class Event(models.Model):
 
     def __str__(self):
         return f'{self.ip_address} {self.level} {self.message}'
+
+    @property
+    def total_occurrences(self):
+        return 10
