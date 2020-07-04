@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Environment(models.Model):
+    """
+    Classe Modelo para Ambiente
+    """
     name = models.CharField('Nome', max_length=30)
     description = models.TextField('Descrição')
 
@@ -13,6 +16,9 @@ class Environment(models.Model):
 
 
 class User(models.Model):
+    """
+    Classe Modelo para Usuário
+    """
     name = models.CharField('Nome', max_length=100)
     e_mail = models.EmailField('E-mail')
     password = models.CharField('Senha', max_length=50)
@@ -27,6 +33,9 @@ class User(models.Model):
 
 
 class Application(models.Model):
+    """
+    Classe Modelo para Aplicação
+    """
     name = models.CharField('Nome', max_length=70)
     environment = models.ManyToManyField(Environment)
     user = models.ForeignKey(User, on_delete=models.deletion.DO_NOTHING)
@@ -40,7 +49,7 @@ class Application(models.Model):
 
 class Event(models.Model):
     """
-    Evento
+    Classe Modelo para Evento
     """
     ERROR = 'E'
     CRITICAL = 'C'
@@ -78,6 +87,13 @@ class Event(models.Model):
         on_delete=models.deletion.DO_NOTHING
     )
 
+    archived = models.BooleanField('Arquivado', default=False)
+    archived_datetime = models.DateTimeField(
+        'Data/Hora Arquivado',
+        auto_now=False,
+        null=True
+    )
+
     class Meta:
         db_table = 'event'
 
@@ -85,5 +101,9 @@ class Event(models.Model):
         return f'{self.ip_address} {self.level} {self.message}'
 
     @property
-    def total_occurrences(self):
-        return 10
+    def occurrences(self):
+        return Event.objects.filter(
+            application=self.application,
+            environment=self.environment,
+            message=self.message,
+        ).count()

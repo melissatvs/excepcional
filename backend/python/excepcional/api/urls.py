@@ -1,7 +1,5 @@
 from django.urls import path, include, re_path
-
 from rest_framework import routers
-
 from api import views
 
 
@@ -13,8 +11,7 @@ urlpatterns = [
     path('event/', views.EventListFiltered.as_view()),
     re_path(r'event/(?P<pk>\d+)?', views.EventDetail.as_view()),
 
-    path('environment/', views.EnvironmentListFiltered.as_view()),
-    path('environment/', views.EnvironmentCreate.as_view()),
+    path('environment/', views.EnvironmentList.as_view()),
     re_path(r'environment/(?P<pk>\d+)?', views.EnvironmentDetail.as_view()),
 
     path('application/', views.ApplicationList.as_view()),

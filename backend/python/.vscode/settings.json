@@ -1,6 +1,6 @@
 {
     "python.linting.enabled": true,
-    "python.linting.pylintEnabled": true,
+    "python.linting.pylintEnabled": false,
     "python.linting.pylintArgs": [
         "--disable=C0111,C0112",
         "--load-plugins=pylint_django"
@@ -12,5 +12,6 @@
     "python.testing.nosetestsEnabled": false,
     "python.testing.pytestEnabled": false,
     "git.ignoreLimitWarning": true,
-    "python.testing.promptToConfigure": false
+    "python.testing.promptToConfigure": false,
+    "python.linting.flake8Enabled": true
 }
