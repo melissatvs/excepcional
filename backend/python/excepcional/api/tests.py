@@ -1,5 +1,4 @@
 from django.test import TestCase
-
 from api.models import User, Environment, Application, Event
 
 
@@ -134,7 +133,9 @@ class EventTestCase(TestCase):
             'ip_address',
             'message',
             'application',
-            'environment'
+            'environment',
+            'occurrences',
+            'archived',
         )
 
         for field in fields:
