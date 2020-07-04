@@ -1,14 +1,16 @@
 # Excepcional
 
-> Projeto de uma Central de Erros em andamento, o foco é desenvolver o Backend em Python
+Solução dada ao projeto do Aceleradev de Python da Stone
 
-Realizado durante o Aceleradev de Python da Stone
+Requisitos do projeto: [Central de Erros](central-erros.md)
+
+> Projeto em andamento, o foco é desenvolver o Backend em Python
 
 ## Linguagens
 
-React JS
-
 Python
+
+React JS
 
 ## Tempo no projeto
 
