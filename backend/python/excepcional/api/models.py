@@ -22,7 +22,7 @@ class User(models.Model):
     name = models.CharField('Nome', max_length=100)
     e_mail = models.EmailField('E-mail')
     password = models.CharField('Senha', max_length=50)
-    date_created = models.DateTimeField('Data Criação', auto_now=True)
+    date_created = models.DateTimeField('Data Criação', auto_now_add=True)
     last_login = models.DateTimeField('Último Acesso', null=True)
 
     class Meta():
@@ -65,7 +65,7 @@ class Event(models.Model):
         (DEBUG, 'Modo Dev.'),
     )
 
-    datetime = models.DateTimeField('Data/Hora', auto_now=True)
+    datetime = models.DateTimeField('Data/Hora', auto_now_add=True)
     user_name = models.CharField('Usuário', max_length=50, null=True)
     level = models.CharField('Nível', max_length=11, choices=LEVELS)
 

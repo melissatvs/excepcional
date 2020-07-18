@@ -4,13 +4,13 @@ from rest_framework import status
 
 def api_response(message: str, status_code: int) -> JsonResponse:
     """
-    Retorna uma resposta HTTP com um JSON.
+    Retorna uma resposta HTTP com uma mensagem em formato JSON.
 
     Exemplo:
 
     ```json
     {
-        "detail": "mensagem customizada"
+        "detail": :param: message
     }
     ```
 
@@ -30,3 +30,11 @@ def api_response(message: str, status_code: int) -> JsonResponse:
             'detail': f'{type_message}. {message}'
         }, status=status_code
     )
+
+
+# def api_response(data: object, status_code: int) -> JsonResponse:
+#     """
+#     Retorna uma resposta HTTP com um JSON.
+#     """
+
+#     return JsonResponse(data, status=status_code)
