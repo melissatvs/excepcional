@@ -65,3 +65,12 @@ class EventModelSerializer(serializers.ModelSerializer):
             'environment',
             'occurrences'
         ]
+
+
+# class TokenViewModelSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = Token
+#         fieds = [
+#             'key'
+#         ]
