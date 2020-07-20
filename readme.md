@@ -58,16 +58,15 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
 
 #### *`GET`* `api/user/{id}` :closed_lock_with_key:
 
+Retorna os dados de um usuário pelo id
+
 ##### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
-Retorna os dados de um usuário pelo id
-
 ##### Parâmetros
 
 - **id** - obrigatório
-
 
 ##### Respostas
 
@@ -89,13 +88,20 @@ Retorna os dados de um usuário pelo id
     }
     ```
 
+- 403 - Forbidden
+    ```json
+    {
+        "detail": "Não foi informado token de acesso da aplicação"
+    }
+
 #### *`PUT`* `api/user/{id}` :closed_lock_with_key:
+
+Altera o usuário pelo id
 
 ##### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
-Altera o usuário pelo id
 
 ##### Parâmetros 
 
@@ -134,13 +140,19 @@ Altera o usuário pelo id
     }
     ```
 
+- 403 - Forbidden
+    ```json
+    {
+        "detail": "Não foi informado token de acesso da aplicação"
+    }
+
 #### *`DELETE`* `api/user/{id}` :closed_lock_with_key:
+
+Exclui o usuário pelo id
 
 ##### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
-
-Exclui o usuário pelo id
 
 ### Chave de acesso do Usuário (user_token)
 
@@ -151,23 +163,33 @@ Exclui o usuário pelo id
 **`body`**
 ```json
 {
-
+    "user_name": "superusuario",
+    "user_password": "senhamaissecreta"
 }
 ```
 
 ##### Respostas
 
-**`body`**
-```json
-{
-    
-}
-```
+- 201 - Created
+    ```json
+    {
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX25hbWUiOiJzdXBlcnVzdWFyaW8iLCJ1c2VyX3Bhc3N3b3JkIjoic2VuaGFtYWlzc2VjcmV0YSJ9.V4mUaubiWFzLGSAZavEnmmk7jY7xxqHiNl7mrHGWxFE"
+    }
+    ```
+
+- 404 - Not Found
+    ```json
+    {
+        "detail": "Not found."
+    }
+    ```
 
 
 ### Ambiente (environment)
 
 #### *`POST`* `api/environment/` :closed_lock_with_key:
+
+Cria um novo ambiente
 
 ##### Autenticação
 
@@ -186,7 +208,6 @@ Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuári
 ##### Respostas
 
 - 201 - Created
-    **`body`**
     ```json
     {
         "id": 4,
@@ -202,7 +223,15 @@ Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuári
     }
     ```
 
+- 403 - Forbidden
+    ```json
+    {
+        "detail": "Não foi informado token de acesso da aplicação"
+    }
+
 #### *`GET`* `api/environment/` :closed_lock_with_key:
+
+Retorna uma lista com todos ambientes
 
 ##### Autenticação
 
@@ -211,6 +240,8 @@ Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuári
 
 #### *`GET`* `api/environment/{id}` :closed_lock_with_key:
 
+Busca o ambiente pelo id
+
 ##### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
@@ -218,12 +249,16 @@ Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuári
 
 #### *`PUT`* `api/environment/{id}` :closed_lock_with_key:
 
+Altera os dados do ambiente pelo id
+
 ##### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
 #### *`DELETE`* `api/environment/{id}` :closed_lock_with_key:
+
+Exclui o ambiente pelo id
 
 ##### Autenticação
 
@@ -235,6 +270,8 @@ Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuári
 
 #### *`POST`* `api/application/` :closed_lock_with_key: :key:
 
+Cria uma nova aplicação
+
 ##### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
@@ -244,18 +281,42 @@ Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuári
 **`body`**
 ```json
 {
-
+    "name": "Super App",
+    "environment": [
+        1,
+        2
+    ],
+    "user": 1
 }
 ```
 
 ##### Respostas
 
-**`body`**
-```json
-{
-    
-}
-```
+- 201 - Created
+    ```json
+    {
+        "id": 3,
+        "name": "Super App",
+        "environment": [
+            1,
+            2
+        ],
+        "user": 1
+    }
+    ```
+
+- 400 - Bad Request
+    ```json
+    {
+        "detail": "Falha na solicitação. Não foi possível criar a aplicação"
+    }
+    ```
+
+- 403 - Forbidden
+    ```json
+    {
+        "detail": "Não foi informado token de acesso da aplicação"
+    }
 
 #### *`GET`* `api/application/` :closed_lock_with_key:
 
@@ -286,26 +347,44 @@ Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuári
 
 ### Chave de acesso da Aplicação (application_token)
 
-#### *`POST`* `api/application_token/` :key:
+#### *`POST`* `api/application_token/` :closed_lock_with_key::key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
+
 
 ##### Exemplo de requisição
 
 **`body`**
 ```json
 {
-
+    "application_id": 1,
+    "user_id": 1
 }
 ```
 
 ##### Respostas
 
-**`body`**
-```json
-{
-    
-}
-```
+- 201 - Created
+    ```json
+    {
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcHBsaWNhdGlvbl9pZCI6MSwidXNlcl9pZCI6MX0.dfW8ga3qUGhNCG_EecOdhNn4ZysJ79-pu55oav2LHAs"
+    }
+    ```
 
+- 404 - Not Found
+    ```json
+    {
+        "detail": "Not found."
+    }
+    ```
+
+- 403 - Forbidden
+    ```json
+    {
+        "detail": "Não foi informado token de acesso da aplicação"
+    }
 
 ### Evento da Aplicação (event)
 
@@ -320,18 +399,44 @@ Usar chave de acesso da *aplicação* fornecida na [criação da aplicação](#a
 **`body`**
 ```json
 {
-
+    "user_name": "USER_VILAO",
+    "level": "E",
+    "ip_address": "128.0.0.1",
+    "message": "Access Violation, que é o erro que mais ocorre com programadores delphi jr.",
+    "application": 1,
+    "environment": 1
 }
 ```
 
 ##### Respostas
 
-**`body`**
-```json
-{
-    
-}
-```
+- 201 - Created
+    ```json
+    {
+        "id": 1,
+        "datetime": "2020-07-20T02:16:41.889854Z",
+        "user_name": "USER_VILAO",
+        "level": "E",
+        "ip_address": "128.0.0.1",
+        "message": "Access Violation, que é o erro que mais ocorre com programadores delphi jr.",
+        "application": 1,
+        "environment": 1,
+        "occurrences": 1
+    }
+    ```
+
+- 400 - Bad Request
+    ```json
+    {
+        "detail": "Falha na solicitação. Não foi possível inserir o evento!"
+    }
+    ```
+
+- 403 - Forbidden
+    ```json
+    {
+        "detail": "Não foi informado token de acesso da aplicação"
+    }
 
 #### *`GET`* `api/event/` :closed_lock_with_key:
 
