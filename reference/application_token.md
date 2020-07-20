@@ -1,4 +1,4 @@
-# [:house:](../readme.md)
+# [:house:](../readme.md#recursos-da-api-nerd_face)
 
 # Chave de acesso da Aplicação (application_token)
 
