@@ -17,7 +17,7 @@ A consulta dos *eventos*, exclusão, arquivamento, gerenciamento de aplicações
 
 ## Recursos da API :nerd_face:
 
-[Usuário (user)](/reference/user.md)
+### [Usuário (user)](/reference/user.md)
 
 *`POST`* api/user/ :key:
 
@@ -27,15 +27,13 @@ A consulta dos *eventos*, exclusão, arquivamento, gerenciamento de aplicações
 
 *`DELETE`* api/user/{id} :closed_lock_with_key:
 
----
 
-[Chave de acesso do Usuário (user_token)](/reference/user_token.md)
+### [Chave de acesso do Usuário (user_token)](/reference/user_token.md)
 
 *`POST`* api/user_token/ :key:
 
----
 
-[Ambiente (environment)](/reference/environment.md)
+### [Ambiente (environment)](/reference/environment.md)
 
 *`POST`* api/environment/ :closed_lock_with_key:
 
@@ -47,9 +45,8 @@ A consulta dos *eventos*, exclusão, arquivamento, gerenciamento de aplicações
 
 *`DELETE`* api/environment/{id} :closed_lock_with_key:
 
----
 
-[Aplicação (application)](/reference/application.md)
+### [Aplicação (application)](/reference/application.md)
 
 *`POST`* api/application/ :closed_lock_with_key: :key:
 
@@ -61,15 +58,13 @@ A consulta dos *eventos*, exclusão, arquivamento, gerenciamento de aplicações
 
 *`DELETE`* api/application/{id} :closed_lock_with_key:
 
----
 
-[Chave de acesso da Aplicação (application_token)](/reference/application_token.md)
+### [Chave de acesso da Aplicação (application_token)](/reference/application_token.md)
 
 *`POST`* api/application_token/ :closed_lock_with_key: :key:
 
----
 
-[Evento da Aplicação (event)](/reference/event.md)
+### [Evento da Aplicação (event)](/reference/event.md)
 
 *`POST`* api/event/ :closed_lock_with_key:
 
@@ -81,4 +76,3 @@ A consulta dos *eventos*, exclusão, arquivamento, gerenciamento de aplicações
 
 *`DELETE`* api/event/{id} :closed_lock_with_key:
 
----
