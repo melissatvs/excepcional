@@ -12,9 +12,9 @@ Requisitos do projeto: [Central de Erros](central-erros.md)
 
 API Rest que disponibiliza end-points para uma central de erros.
 
-Os *eventos* de uma aplicação só pode ser registrados pela própria aplicação que gerou o *evento*.
+Os *eventos* de uma aplicação só podem ser registrados pela própria aplicação que gerou o *evento*.
 
-A consulta dos *eventos*, exclusão, arquivamento, gerenciamento de aplicações, ambientes serão feitos por usuários.
+A consulta dos *eventos*, exclusão, arquivamento, gerenciamento de aplicações e ambientes serão feitos por usuários.
 
 
 ## Recursos da API :nerd_face:
