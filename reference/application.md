@@ -1,14 +1,14 @@
-### Aplicação (application)
+# Aplicação (application)
 
-#### *`POST`* `api/application/` :closed_lock_with_key: :key:
+## *`POST`* `api/application/` :closed_lock_with_key: :key:
 
 Cria uma nova aplicação
 
-##### Autenticação
+### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
-##### Exemplo de requisição
+### Exemplo de requisição
 
 **`body`**
 ```json
@@ -22,7 +22,7 @@ Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuári
 }
 ```
 
-##### Respostas
+### Respostas
 
 - 201 - Created
     ```json
@@ -50,29 +50,29 @@ Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuári
         "detail": "Não foi informado token de acesso da aplicação"
     }
 
-#### *`GET`* `api/application/` :closed_lock_with_key:
+## *`GET`* `api/application/` :closed_lock_with_key:
 
-##### Autenticação
-
-Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
-
-
-#### *`GET`* `api/application/{id}` :closed_lock_with_key:
-
-##### Autenticação
+### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-#### *`PUT`* `api/application/{id}` :closed_lock_with_key:
+## *`GET`* `api/application/{id}` :closed_lock_with_key:
 
-##### Autenticação
+### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-#### *`DELETE`* `api/application/{id}` :closed_lock_with_key:
+## *`PUT`* `api/application/{id}` :closed_lock_with_key:
 
-##### Autenticação
+### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
+
+
+## *`DELETE`* `api/application/{id}` :closed_lock_with_key:
+
+### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)

@@ -1,14 +1,14 @@
-### Ambiente (environment)
+# Ambiente (environment)
 
-#### *`POST`* `api/environment/` :closed_lock_with_key:
+## *`POST`* `api/environment/` :closed_lock_with_key:
 
 Cria um novo ambiente
 
-##### Autenticação
+### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
-##### Exemplo de requisição
+### Exemplo de requisição
 
 **`body`**
 ```json
@@ -18,7 +18,7 @@ Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuári
 }
 ```
 
-##### Respostas
+### Respostas
 
 - 201 - Created
     ```json
@@ -42,37 +42,37 @@ Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuári
         "detail": "Não foi informado token de acesso da aplicação"
     }
 
-#### *`GET`* `api/environment/` :closed_lock_with_key:
+## *`GET`* `api/environment/` :closed_lock_with_key:
 
 Retorna uma lista com todos ambientes
 
-##### Autenticação
+### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-#### *`GET`* `api/environment/{id}` :closed_lock_with_key:
+## *`GET`* `api/environment/{id}` :closed_lock_with_key:
 
 Busca o ambiente pelo id
 
-##### Autenticação
+### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-#### *`PUT`* `api/environment/{id}` :closed_lock_with_key:
+## *`PUT`* `api/environment/{id}` :closed_lock_with_key:
 
 Altera os dados do ambiente pelo id
 
-##### Autenticação
+### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-#### *`DELETE`* `api/environment/{id}` :closed_lock_with_key:
+## *`DELETE`* `api/environment/{id}` :closed_lock_with_key:
 
 Exclui o ambiente pelo id
 
-##### Autenticação
+### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)

@@ -1,10 +1,10 @@
-### Usuário (user)
+# Usuário (user)
 
-#### *`POST`* `api/user/` :key:
+## *`POST`* `api/user/` :key:
 
 Cria um novo usuário e retorna um json com os dados enviados, e um *token* de acesso. Esse *token* é a chave que deve ser usada para acesso de outros recursos disponibilizados para o usuário.
 
-##### Exemplo de requisição
+### Exemplo de requisição
 
 **`body`**
 ```json
@@ -15,7 +15,7 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
 }
 ```
 
-##### Respostas
+### Respostas
 
 - 201 - Created
 
@@ -38,19 +38,19 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
     ```
 
 
-#### *`GET`* `api/user/{id}` :closed_lock_with_key:
+## *`GET`* `api/user/{id}` :closed_lock_with_key:
 
 Retorna os dados de um usuário pelo id
 
-##### Autenticação
+### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
-##### Parâmetros
+### Parâmetros
 
 - **id** - obrigatório
 
-##### Respostas
+### Respostas
 
 - 200 - OK
     ```json
@@ -76,20 +76,20 @@ Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuári
         "detail": "Não foi informado token de acesso da aplicação"
     }
 
-#### *`PUT`* `api/user/{id}` :closed_lock_with_key:
+## *`PUT`* `api/user/{id}` :closed_lock_with_key:
 
 Altera o usuário pelo id
 
-##### Autenticação
+### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-##### Parâmetros 
+### Parâmetros 
 
 - **id** - obrigatório
 
-##### Exemplo de requisição
+### Exemplo de requisição
 
 **`body`**
 ```json
@@ -101,7 +101,7 @@ Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuári
 
 ```
 
-##### Respostas
+### Respostas
 
 - 200 - OK
     ```json
@@ -128,10 +128,10 @@ Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuári
         "detail": "Não foi informado token de acesso da aplicação"
     }
 
-#### *`DELETE`* `api/user/{id}` :closed_lock_with_key:
+## *`DELETE`* `api/user/{id}` :closed_lock_with_key:
 
 Exclui o usuário pelo id
 
-##### Autenticação
+### Autenticação
 
 Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)

@@ -1,8 +1,8 @@
-### Chave de acesso do Usuário (user_token)
+# Chave de acesso do Usuário (user_token)
 
-#### *`POST`* `api/user_token/` :key:
+## *`POST`* `api/user_token/` :key:
 
-##### Exemplo de requisição
+### Exemplo de requisição
 
 **`body`**
 ```json
@@ -12,7 +12,7 @@
 }
 ```
 
-##### Respostas
+### Respostas
 
 - 201 - Created
     ```json
