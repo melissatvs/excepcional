@@ -18,11 +18,11 @@ A consulta dos *eventos*, exclusão, arquivamento, gerenciamento de aplicações
 
 ### Usuário (user)
 
-#### *`POST`* `api/user/`
+#### *`POST`* `api/user/` :key:
 
 Cria um novo usuário e retorna um json com os dados enviados, e um *token* de acesso. Esse *token* é a chave que deve ser usada para acesso de outros recursos disponibilizados para o usuário.
 
-**Exemplo de requisição**
+##### Exemplo de requisição
 
 **`body`**
 ```json
@@ -33,10 +33,10 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
 }
 ```
 
-**Respostas**
+##### Respostas
 
-- 201 - Usuário criado
-    **`body`**
+- 201 - Created
+
     ```json
     {
         "id": 1,
@@ -49,7 +49,6 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
     ```
 
 - 400 - Bad Request
-    **`body`**
     ```json
     {
         "detail": "Falha na solicitação. Não foi possível criar o usuário"
@@ -57,40 +56,97 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
     ```
 
 
-#### *`GET`* `api/user/{id}`
+#### *`GET`* `api/user/{id}` :closed_lock_with_key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
+
+Retorna os dados de um usuário pelo id
+
+##### Parâmetros
+
+- **id** - obrigatório
 
 
+##### Respostas
 
+- 200 - OK
+    ```json
+    {
+        "id": 1,
+        "name": "superusuario",
+        "e_mail": "superusuario@app.com.br",
+        "date_created": "2020-07-20T00:48:16.815017Z",
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX25hbWUiOiJzdXBlcnVzdWFyaW8iLCJ1c2VyX3Bhc3N3b3JkIjoic2VuaGFzdXBlcnNlY3JldGEifQ.QpVsTKjk4jUq8k7PLRVw8HxAH7UN6r38METxXyjxxC8"
+    }
+    ```
 
-#### *`POST`* `api/user/{id}`
+- 404 - Not Found
+    ```json
+    {
+        "detail": "Not found."
+    }
+    ```
 
-**Exemplo de requisição**
+#### *`PUT`* `api/user/{id}` :closed_lock_with_key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
+
+Altera o usuário pelo id
+
+##### Parâmetros 
+
+- **id** - obrigatório
+
+##### Exemplo de requisição
 
 **`body`**
 ```json
 {
-
+    "name": "superusuario",
+    "e_mail": "superusuario@app.com.br",
+    "password": "senhamaissecreta"
 }
+
 ```
 
-**Respostas**
+##### Respostas
 
-**`body`**
-```json
-{
-    
-}
-```
+- 200 - OK
+    ```json
+    {
+        "id": 1,
+        "name": "superusuario",
+        "e_mail": "superusuario@app.com.br",
+        "password": "senhamaissecreta",
+        "date_created": "2020-07-20T00:48:16.815017Z",
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX25hbWUiOiJzdXBlcnVzdWFyaW8iLCJ1c2VyX3Bhc3N3b3JkIjoic2VuaGFtYWlzc2VjcmV0YSJ9.V4mUaubiWFzLGSAZavEnmmk7jY7xxqHiNl7mrHGWxFE"
+    }
+    ```
 
-#### *`DELETE`* `api/user/{id}`
+- 404 - Not Found
+    ```json
+    {
+        "detail": "Not found."
+    }
+    ```
 
+#### *`DELETE`* `api/user/{id}` :closed_lock_with_key:
 
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
+
+Exclui o usuário pelo id
 
 ### Chave de acesso do Usuário (user_token)
 
-#### *`POST`* `api/user_token/`
+#### *`POST`* `api/user_token/` :key:
 
-**Exemplo de requisição**
+##### Exemplo de requisição
 
 **`body`**
 ```json
@@ -99,7 +155,7 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
 }
 ```
 
-**Respostas**
+##### Respostas
 
 **`body`**
 ```json
@@ -111,9 +167,13 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
 
 ### Ambiente (environment)
 
-#### *`POST`* `api/environment/`
+#### *`POST`* `api/environment/` :closed_lock_with_key:
 
-**Exemplo de requisição**
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
+
+##### Exemplo de requisição
 
 **`body`**
 ```json
@@ -123,7 +183,7 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
 }
 ```
 
-**Respostas**
+##### Respostas
 
 - 201 - Created
     **`body`**
@@ -142,24 +202,44 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
     }
     ```
 
-#### *`GET`* `api/environment/`
+#### *`GET`* `api/environment/` :closed_lock_with_key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-#### *`GET`* `api/environment/{id}`
+#### *`GET`* `api/environment/{id}` :closed_lock_with_key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-#### *`PUT`* `api/environment/{id}`
+#### *`PUT`* `api/environment/{id}` :closed_lock_with_key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-#### *`DELETE`* `api/environment/{id}`
+#### *`DELETE`* `api/environment/{id}` :closed_lock_with_key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
 
 ### Aplicação (application)
 
-#### *`POST`* `api/application/`
+#### *`POST`* `api/application/` :closed_lock_with_key: :key:
 
-**Exemplo de requisição**
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
+
+##### Exemplo de requisição
 
 **`body`**
 ```json
@@ -168,7 +248,7 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
 }
 ```
 
-**Respostas**
+##### Respostas
 
 **`body`**
 ```json
@@ -177,22 +257,38 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
 }
 ```
 
-#### *`GET`* `api/application/`
+#### *`GET`* `api/application/` :closed_lock_with_key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-#### *`GET`* `api/application/{id}`
+#### *`GET`* `api/application/{id}` :closed_lock_with_key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-#### *`PUT`* `api/application/{id}`
+#### *`PUT`* `api/application/{id}` :closed_lock_with_key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-#### *`DELETE`* `api/application/{id}`
+#### *`DELETE`* `api/application/{id}` :closed_lock_with_key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 ### Chave de acesso da Aplicação (application_token)
 
-#### *`POST`* `api/application_token/`
+#### *`POST`* `api/application_token/` :key:
 
-**Exemplo de requisição**
+##### Exemplo de requisição
 
 **`body`**
 ```json
@@ -201,7 +297,7 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
 }
 ```
 
-**Respostas**
+##### Respostas
 
 **`body`**
 ```json
@@ -213,9 +309,13 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
 
 ### Evento da Aplicação (event)
 
-#### *`POST`* `api/event/`
+#### *`POST`* `api/event/` :closed_lock_with_key:
 
-**Exemplo de requisição**
+##### Autenticação
+
+Usar chave de acesso da *aplicação* fornecida na [criação da aplicação](#aplicação-application) ou na [geração de token](#chave-de-acesso-da-aplicação-application_token)
+
+##### Exemplo de requisição
 
 **`body`**
 ```json
@@ -224,7 +324,7 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
 }
 ```
 
-**Respostas**
+##### Respostas
 
 **`body`**
 ```json
@@ -233,14 +333,30 @@ Cria um novo usuário e retorna um json com os dados enviados, e um *token* de a
 }
 ```
 
-#### *`GET`* `api/event/`
+#### *`GET`* `api/event/` :closed_lock_with_key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-#### *`GET`* `api/event/{id}`
+#### *`GET`* `api/event/{id}` :closed_lock_with_key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-#### *`PUT`* `api/event/{id}`
+#### *`PUT`* `api/event/{id}` :closed_lock_with_key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
 
-#### *`DELETE`* `api/event/{id}`
+#### *`DELETE`* `api/event/{id}` :closed_lock_with_key:
+
+##### Autenticação
+
+Usar chave de acesso do *usuário* fornecida na [criação do usuário](#usuário-user) ou na [geração de token](#chave-de-acesso-do-usuário-user_token)
 
