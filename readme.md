@@ -17,6 +17,10 @@ Os *eventos* de uma aplicação só podem ser registrados pela própria aplicaç
 A consulta dos *eventos*, exclusão, arquivamento, gerenciamento de aplicações e ambientes serão feitos por usuários.
 
 
+## Endereço :globe_with_meridians:
+
+**https://excepcional.herokuapp.com/**
+
 ## Recursos da API :monocle_face:
 
 ### [Usuário (user)](/reference/user.md)
