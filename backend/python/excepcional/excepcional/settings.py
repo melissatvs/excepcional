@@ -72,9 +72,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            # 'libraries': {
-            #     'staticfiles': 'django.templatetags.staticfiles',
-            # },
         },
     },
 ]
@@ -86,11 +83,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'api.authentication.CustomAuthentication',
-    #     'api.authentication.UserAuthentication',
-    #     'api.authentication.ApplicationAuthentication',
-    # ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],

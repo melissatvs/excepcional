@@ -426,7 +426,6 @@ class UserToken(APIView):
             }
 
             return JsonResponse(data, status.HTTP_201_CREATED)
-            # return api_response(data, status.HTTP_201_CREATED)
         except Exception as error:
             return api_response('Não foi possível gerar a chave de acesso.' +
                                 ' Erro: ' + str(error),

@@ -106,3 +106,11 @@ SECRET_KEY = 'sua chave super secreta principal'
 SECRET_USER = 'sua chave super secreta para usuário'
 SECRET_APP = 'sua chave super secreta para aplicação'
 ```
+
+### Executando
+
+Estando no caminho `/backend/python/excepcional` execute o comando:
+
+`python manage.py runserver`
+
+Será mostrado um endereço, é só usar ele como URL raiz para acessar os [endpoints](#recursos-da-api-monocle_face).
