@@ -97,7 +97,7 @@ Para desativar, use o comando: `deactivate`
 ### Crie suas *Secrets*
 
 Crie um arquivo com o nome `.env`,  no caminho `/backend/python`.
-Insira nele as chaves secretas `SECRET_KEY`, `SECRET_USER`, e `SECRET_APP`.
+Insira nele as chaves secretas `SECRET_KEY`, `SECRET_USER` e `SECRET_APP`.
 
 Exemplo:
 ```
