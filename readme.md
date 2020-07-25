@@ -17,7 +17,7 @@ Os *eventos* de uma aplicação só podem ser registrados pela própria aplicaç
 A consulta dos *eventos*, exclusão, arquivamento, gerenciamento de aplicações e ambientes serão feitos por usuários.
 
 
-## Recursos da API :nerd_face:
+## Recursos da API :monocle_face:
 
 ### [Usuário (user)](/reference/user.md)
 
@@ -78,3 +78,31 @@ A consulta dos *eventos*, exclusão, arquivamento, gerenciamento de aplicações
 
 *`DELETE`* api/event/{id} :closed_lock_with_key:
 
+
+## [Clonou](https://github.com/melissatvs/excepcional/archive/master.zip)? :nerd_face:
+
+### Crie um ambiente virtual
+
+Instale o virtualenv: `pip3 install virtualenv`
+
+Crie o amnbiente: `virtualenv [nome do ambiente virtual] -p python3`
+
+Ative o ambiente: `source [nome do ambiente virtual]/Scripts/activate`
+
+Instale as dependências: `pip install -r requirements.txt`
+
+Para desativar, use o comando: `deactivate`
+
+
+### Crie suas *Secrets*
+
+Crie um arquivo com o nome `.env`,  no caminho `/backend/python`.
+Insira nele as chaves secretas `SECRET_KEY`, `SECRET_USER`, e `SECRET_APP`.
+
+Exemplo:
+```
+[settings]
+SECRET_KEY = 'sua chave super secreta principal'
+SECRET_USER = 'sua chave super secreta para usuário'
+SECRET_APP = 'sua chave super secreta para aplicação'
+```
