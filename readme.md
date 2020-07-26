@@ -89,7 +89,7 @@ A consulta dos *eventos*, exclusão, arquivamento, gerenciamento de aplicações
 
 Instale o virtualenv: `pip3 install virtualenv`
 
-Crie o amnbiente: `virtualenv [nome do ambiente virtual] -p python3`
+Crie o ambiente: `virtualenv [nome do ambiente virtual] -p python3`
 
 Ative o ambiente: `source [nome do ambiente virtual]/Scripts/activate`
 
@@ -117,4 +117,4 @@ Estando no caminho `/backend/python/excepcional` execute o comando:
 
 `python manage.py runserver`
 
-Será mostrado um endereço, é só usar ele como URL raiz para acessar os [endpoints](#recursos-da-api-monocle_face).
+Será mostrado um endereço, é só usar ele como URL raiz para acessar os [end-points](#recursos-da-api-monocle_face).
