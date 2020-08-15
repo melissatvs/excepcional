@@ -42,7 +42,8 @@ class UserTestCase(TestCase):
             'e_mail',
             'password',
             'date_created',
-            'last_login'
+            'last_login',
+            'token'
         )
 
         for field in fields:

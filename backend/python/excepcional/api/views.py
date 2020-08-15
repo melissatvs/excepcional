@@ -18,6 +18,119 @@ from api.serializers import (
 )
 
 
+class UserList(APIView):
+    """
+    Criação de usuário
+    """
+
+    def post(self, request):
+        """
+        Cria um usuário
+        """
+        serializer = UserFullModelSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return api_response(
+            'Não foi possível criar o usuário',
+            status.HTTP_400_BAD_REQUEST
+        )
+
+
+class UserDetail(APIView):
+    """
+    Exclusão, edição e detalhamento de ambiente
+    """
+    authentication_classes = (excep_auth.UserAuthentication,)
+
+    def get_object(self, pk):
+        """
+        Busca o usuário pela chave
+        """
+        try:
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        """
+        Retorna o usuário
+        """
+        users = self.get_object(pk)
+        serializer = UserViewModelSerializer(users)
+
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        """
+        Altera o usuário
+        """
+        users = self.get_object(pk)
+        serializer = UserFullModelSerializer(users, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return api_response(
+            'Não foi possível editar o usuário!',
+            status.HTTP_400_BAD_REQUEST
+        )
+
+    def delete(self, request, pk):
+        """
+        Exclui o usuário
+        """
+        users = self.get_object(pk)
+        users.delete()
+
+        return api_response('Usuário excluído!', status.HTTP_204_NO_CONTENT)
+
+
+class UserToken(APIView):
+    """
+    Geração de token para usuário
+    """
+
+    def get_object(self, name, password):
+        """
+        Busca o usuário pela chave
+        """
+        try:
+            return User.objects.get(name=name, password=password)
+        except User.DoesNotExist:
+            raise Http404
+
+    def post(self, request):
+        """
+        Gera token de acesso para usuário
+        """
+        name = request.data.get('user_name')
+        password = request.data.get('user_password')
+
+        self.get_object(name, password)
+        token = excep_auth.CustomAuthentication.create_token(
+            request.data,
+            SECRET_USER
+        )
+
+        if not token:
+            return api_response('Não foi possível gerar a chave de acesso.',
+                                status.HTTP_400_BAD_REQUEST)
+
+        try:
+            return JsonResponse(
+                {'token': token},
+                status=status.HTTP_201_CREATED
+            )
+        except Exception as error:
+            return api_response('Não foi possível gerar a chave de acesso.' +
+                                ' Erro: ' + str(error),
+                                status.HTTP_400_BAD_REQUEST)
+
+
 class EnvironmentList(APIView):
     """
     Listagem e criação de ambientes
@@ -97,98 +210,6 @@ class EnvironmentDetail(APIView):
         environment.delete()
 
         return api_response('Ambiente excluído!', status.HTTP_204_NO_CONTENT)
-
-
-class EventList(generics.ListAPIView):
-    """
-    get:
-      Retorna uma lista com os eventos não arquivados
-    """
-    authentication_classes = (excep_auth.ApplicationAuthentication,)
-    serializer_class = EventModelSerializer
-
-    queryset = Event.objects.filter(archived=False)
-    filter_backends = [DjangoFilterBackend, EventOrderingFilter]
-    filterset_fields = ['application', 'environment']
-    ordering_fields = ['datetime', 'level']
-    ordering = ['datetime']
-
-    def post(self, request):
-        """
-        Insere um novo evento
-        """
-        serializer = EventModelSerializer(data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        return api_response(
-            'Não foi possível inserir o evento!',
-            status.HTTP_400_BAD_REQUEST
-        )
-
-
-class EventDetail(APIView):
-    """
-    Exclusão, edição e detalhamento de evento
-    """
-    authentication_classes = (excep_auth.UserAuthentication,)
-
-    def get_object(self, pk):
-        """
-        Busca o evento pela chave
-        """
-        try:
-            return Event.objects.get(pk=pk)
-        except Event.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk):
-        """
-        Retorna o evento
-
-        ---
-
-        """
-        event = self.get_object(pk)
-        serializer = EventModelSerializer(event)
-
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        """
-        Arquiva o evento
-        """
-        event = self.get_object(pk)
-
-        if event.archived:
-            return api_response(
-                'Evento já está arquivado!',
-                status.HTTP_400_BAD_REQUEST
-            )
-
-        event.archived = True
-        event.datetime_archived = datetime.now()
-
-        try:
-            event.save()
-            return api_response('Evento arquivado!', status.HTTP_200_OK)
-        except Exception:
-            return api_response(
-                'Não foi possível arquivar o evento!',
-                status.HTTP_400_BAD_REQUEST
-            )
-
-    def delete(self, request, pk):
-        """
-        Exclui o evento
-        """
-
-        event = self.get_object(pk)
-        event.delete()
-
-        return api_response('Evento excluído!', status.HTTP_204_NO_CONTENT)
 
 
 class ApplicationList(APIView):
@@ -297,136 +318,110 @@ class ApplicationToken(APIView):
         application_id = request.data.get('application_id')
         user_id = request.data.get('user_id')
 
-        application = self.get_object(application_id, user_id)
-
         try:
-            token = excep_auth.CustomAuthentication.create_token({
-                'application_id': application.id,
-                'user_id': application.user.id
-            }, SECRET_APP)
+            self.get_object(application_id, user_id)
+            token = excep_auth.CustomAuthentication.create_token(
+                request.data,
+                SECRET_APP
+            )
 
-            return api_response({'token': token}, status.HTTP_201_CREATED)
+            return JsonResponse(
+                {'token': token},
+                status=status.HTTP_201_CREATED
+            )
         except Exception as error:
             return api_response('Não foi possível gerar a chave de acesso.' +
                                 ' Erro: ' + str(error),
                                 status.HTTP_400_BAD_REQUEST)
 
 
-class UserList(APIView):
-    authentication_classes = (excep_auth.UserAuthentication,)
+class EventList(generics.ListAPIView):
+    """
+    get:
+      Retorna uma lista com os eventos não arquivados
+    """
+    authentication_classes = (excep_auth.ApplicationAuthentication,)
+    serializer_class = EventModelSerializer
 
-    """
-    Criação de usuário
-    """
+    queryset = Event.objects.filter(archived=False)
+    filter_backends = [DjangoFilterBackend, EventOrderingFilter]
+    filterset_fields = ['application', 'environment']
+    ordering_fields = ['datetime', 'level']
+    ordering = ['datetime']
+
     def post(self, request):
         """
-        Cria um usuário
+        Insere um novo evento
         """
-        serializer = UserFullModelSerializer(data=request.data)
+        serializer = EventModelSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return api_response(
-            'Não foi possível criar o usuário',
+            'Não foi possível inserir o evento!',
             status.HTTP_400_BAD_REQUEST
         )
 
 
-class UserDetail(APIView):
+class EventDetail(APIView):
     """
-    Exclusão, edição e detalhamento de ambiente
+    Exclusão, edição e detalhamento de evento
     """
     authentication_classes = (excep_auth.UserAuthentication,)
 
     def get_object(self, pk):
         """
-        Busca o usuário pela chave
+        Busca o evento pela chave
         """
         try:
-            return User.objects.get(pk=pk)
-        except User.DoesNotExist:
+            return Event.objects.get(pk=pk)
+        except Event.DoesNotExist:
             raise Http404
 
     def get(self, request, pk):
         """
-        Retorna o usuário
+        Retorna o evento
+
+        ---
+
         """
-        users = self.get_object(pk)
-        serializer = UserViewModelSerializer(users)
+        event = self.get_object(pk)
+        serializer = EventModelSerializer(event)
 
         return Response(serializer.data)
 
     def put(self, request, pk):
         """
-        Altera o usuário
+        Arquiva o evento
         """
-        users = self.get_object(pk)
-        serializer = UserFullModelSerializer(users, data=request.data)
+        event = self.get_object(pk)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+        if event.archived:
+            return api_response(
+                'Evento já está arquivado!',
+                status.HTTP_400_BAD_REQUEST
+            )
 
-        return api_response(
-            'Não foi possível editar o usuário!',
-            status.HTTP_400_BAD_REQUEST
-        )
+        event.archived = True
+        event.datetime_archived = datetime.now()
+
+        try:
+            event.save()
+            return api_response('Evento arquivado!', status.HTTP_200_OK)
+        except Exception:
+            return api_response(
+                'Não foi possível arquivar o evento!',
+                status.HTTP_400_BAD_REQUEST
+            )
 
     def delete(self, request, pk):
         """
-        Exclui o usuário
+        Exclui o evento
         """
-        users = self.get_object(pk)
-        users.delete()
 
-        return api_response('Usuário excluído!', status.HTTP_204_NO_CONTENT)
+        event = self.get_object(pk)
+        event.delete()
 
-
-class UserToken(APIView):
-    """
-    Geração de token para usuário
-    """
-
-    def get_object(self, pk, password, application_id):
-        """
-        Busca o usuário pela chave
-        """
-        try:
-            return User.objects.get(pk=pk,
-                                    password=password,
-                                    application__id=application_id)
-        except User.DoesNotExist:
-            raise Http404
-
-    def post(self, request):
-        """
-        Gera token de acesso para usuário
-        """
-        id = request.data.get('user_id')
-        password = request.data.get('user_password')
-        application_id = request.data.get('application_id')
-
-        user = self.get_object(id, password, application_id)
-
-        token = excep_auth.CustomAuthentication.create_token({
-                'user_id': user.id,
-                'user_password': user.password,
-                'application_id': application_id
-            }, SECRET_USER)
-
-        if not token:
-            return api_response('Não foi possível gerar a chave de acesso.',
-                                status.HTTP_400_BAD_REQUEST)
-
-        try:
-            data = {
-                'token': token
-            }
-
-            return JsonResponse(data, status.HTTP_201_CREATED)
-        except Exception as error:
-            return api_response('Não foi possível gerar a chave de acesso.' +
-                                ' Erro: ' + str(error),
-                                status.HTTP_400_BAD_REQUEST)
+        return api_response('Evento excluído!', status.HTTP_204_NO_CONTENT)

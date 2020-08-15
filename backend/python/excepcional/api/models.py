@@ -1,4 +1,6 @@
 from django.db import models
+from api.authentication import CustomAuthentication
+from excepcional.settings import SECRET_USER, SECRET_APP
 
 
 class Environment(models.Model):
@@ -31,6 +33,15 @@ class User(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def token(self):
+        payload = {
+            'user_name': self.name,
+            'user_password': self.password,
+        }
+
+        return CustomAuthentication.create_token(payload, SECRET_USER)
+
 
 class Application(models.Model):
     """
@@ -45,6 +56,15 @@ class Application(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def token(self):
+        payload = {
+            'application_id': self.id,
+            'user_id': self.user.id,
+        }
+
+        return CustomAuthentication.create_token(payload, SECRET_APP)
 
 
 class Event(models.Model):
