@@ -21,7 +21,8 @@ class ApplicationModelSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'environment',
-            'user'
+            'user',
+            'token'
         ]
 
 
@@ -34,7 +35,8 @@ class UserFullModelSerializer(serializers.ModelSerializer):
             'name',
             'e_mail',
             'password',
-            'date_created'
+            'date_created',
+            'token'
         ]
 
 
@@ -46,7 +48,8 @@ class UserViewModelSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'e_mail',
-            'date_created'
+            'date_created',
+            'token'
         ]
 
 
